@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="http://threejs.org/build/three.min.js"></script>
+		<script src=""></script>
+		<script>
+
+			var camera, scene, renderer, geometry, material, mesh, light1;
+
+			init();
+			animate();
+
+			function init() {
+
+			    scene = new THREE.Scene();
+
+			    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+			    camera.position.z = 500;
+			    scene.add(camera);
+
+			    geometry = new THREE.CubeGeometry(200, 200, 200);
+			    material = new THREE.MeshPhongMaterial( { ambient: 0x555555, color: 0x555555, specular: 0xffffff, shininess: 50, shading: THREE.SmoothShading } );
+
+			    mesh = new THREE.Mesh(geometry, material);
+			    scene.add(mesh);
+
+			    scene.add( new THREE.AmbientLight( 0x000000 ) );
+
+					light1 = new THREE.PointLight( 0xff0040, 1, 5000 );
+					light1.position.set( 500, 500, 500 );
+			    scene.add( light1 );
+
+			    renderer = new THREE.WebGLRenderer();
+			    renderer.setSize(window.innerWidth, window.innerHeight);
+
+			    document.body.appendChild(renderer.domElement);
+
+			}
+
+			function animate() {
+
+			    requestAnimationFrame(animate);
+			    render();
+
+			}
+
+			function render() {
+
+			    // var time = Date.now() * 0.0005;
+
+			    mesh.rotation.x += 0.01;
+			    mesh.rotation.y += 0.02;
+
+			    renderer.render(scene, camera);
+
+			}
+		</script>
+	</body>
+</html>
